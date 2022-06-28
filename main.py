@@ -1,6 +1,7 @@
 from typing import Union
-from fastapi import FastAPI
-from base import Book
+from fastapi import FastAPI, Query
+from base import Book, Author
+from typing import List
 
 
 app = FastAPI()
@@ -30,6 +31,16 @@ def update_item(item_id: int, item: Item):
 def get_user_item_id(item_id: int, us: str):
     return {"user": us, "item_id": item_id}
 
-@app.post("/item")
-def post_items( item: Item):
+
+@app.post("/{item_id}")
+def create_book(item: Book):
     return item
+
+@app.post("/Author/")
+def create_book(item:Author):
+    return item
+
+
+@app.get("/jun")
+def get_book(d:List[str] = Query(['test','test2'], description="Search book", deprecated=True)):
+    return d
